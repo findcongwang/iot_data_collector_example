@@ -21,7 +21,8 @@ def device_worker(id):
             "temperature": round(random.uniform(0.0, 200.0), 2),
         }
         resp = requests.post(url="{}/devicedata".format(SERVER_URL), json=data)
-        print(resp.json())
+        if resp:
+            print(resp.json())
 
         # randomize interval between 1-5 seconds
         time.sleep(random.randint(1,5))

@@ -11,6 +11,7 @@ Flask-SQLAlchemy = "*"
 python-dotenv = "*"
 psycopg2 = "*"
 requests = "*"
+pymemcache = "*"
 
 [requires]
 python_version = "3.8"

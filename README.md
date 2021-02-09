@@ -15,9 +15,10 @@ python simulator/device_simulator.py --num_devices=20
 2. Run the backend service `test`
 3. Run dashboard application `test`
 
-#### Possible Tech Considerations
+#### Extensions and Tech Considerations
 * ReactJS frontend web dashboard
-* Add a Redis layer for on-write cache
+* Use Alembic to track database migrations, BRIN on timestamps
+* Use Redis for on-write cache, much more flexible
 * Dockerize components, as well as Postgres/Kafka/Redis containers
 * Use Apache Cassandra to store write-optimized sensor data
 * Use Kafka to receive incoming data behind a load balancer
@@ -28,7 +29,10 @@ python simulator/device_simulator.py --num_devices=20
 #### Development Todos
 - [x] Setup Postgres with SQLAlchemy, DeviceData Model
 - [x] Make simulator to produce to data endpoint w/ device per thread
-- [ ] Make devicedata endpoint to receive data and update memcached/database
-- [ ] Make dashboard route to fetch from memcached or fallback to database
+- [x] Make devicedata endpoint to receive data and update memcached/database
+- [x] Make dashboard route to fetch from memcached or fallback to database
 - [ ] Setup server Procfile to bring up backend API and Kafka listener
-- [ ] Make dashboard client to polling for top 10 devices
+
+#### Developer's Note =D
+
+Did the project incorrectly on first pass which cached and returned top X __device readings__ as opposed to distinct on devices. Didn't click for me until the Nth I tested the application with 5 simulated devices are saw top 10 device readings being returned from dashboard. Fun stuff.
