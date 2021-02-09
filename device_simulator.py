@@ -7,6 +7,7 @@ from datetime import datetime
 from threading import Thread
 
 SERVER_URL = "http://localhost:5000"
+DEVICE_STATUS = ["ON", "OFF", "ACTIVE", "INACTIVE"]
 
 def device_worker(id):
     """
@@ -14,9 +15,9 @@ def device_worker(id):
     """
     while True:
         data = {
-            "deviceId": "Device({})".format(id),
+            "deviceId": "device_{}".format(id),
             "timestamp": datetime.now().isoformat(),
-            "status": "ON",
+            "status": random.choice(DEVICE_STATUS),
             "pressure": round(random.uniform(0.0, 25.0), 2),
             "temperature": round(random.uniform(0.0, 200.0), 2),
         }

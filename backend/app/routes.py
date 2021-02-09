@@ -129,3 +129,21 @@ def dashboard():
         response[feature] = top_readings
 
     return jsonify(response)
+
+
+@app.route('/devices/<device_id>/histogram', methods=['GET'])
+def histogram(device_id):
+    freq = db.session.query(
+        DeviceData.deviceId,
+        DeviceData.status,
+        db.func.count(DeviceData.status)
+    ).filter(
+        DeviceData.deviceId == device_id
+    ).group_by(
+        DeviceData.deviceId,
+        DeviceData.status
+    ).all()
+
+    return jsonify({
+        device_id: {status.value: count  for _, status, count in freq}
+    })

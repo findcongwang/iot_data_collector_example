@@ -46,6 +46,9 @@ $ python device_simulator.py --num_devices=15
 # http://localhost:5000/dashboard
 # http://localhost:5000/dashboard?features=pressure
 # http://localhost:5000/dashboard?features=pressure&interval=past_minute
+
+# Test histogram API endpoint
+# http://localhost:5000/devices/device_1/histogram
 ```
 
 #### Extensions and Tech Considerations
@@ -64,6 +67,7 @@ $ python device_simulator.py --num_devices=15
 - [x] Make simulator to produce to data endpoint w/ device per thread
 - [x] Make devicedata endpoint to receive data and update memcached/database
 - [x] Make dashboard route to fetch from memcached or fallback to database
+- [x] Make status histogram route for a given deviceId
 
 #### Developer's Note =D
 
