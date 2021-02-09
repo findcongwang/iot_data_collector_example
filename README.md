@@ -24,7 +24,7 @@ $ pipenv install
 $ cd backend && flask run
 
 # On separate terminal, start device simulator (remember to pipenv shell)
-$ python device_simulator.py --num_devices=20
+$ python device_simulator.py --num_devices=15
 
 # Open browser or postman and test dashboard API endpoint, e.g.
 # http://localhost:5000/dashboard

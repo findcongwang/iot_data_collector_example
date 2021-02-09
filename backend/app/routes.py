@@ -25,15 +25,15 @@ def devicedata():
     num_top_devices = int(environ.get('NUM_TOP_DEVICES'))
     for feature in DeviceData.features():
         # negate feature value to keep list reversed for efficient .pop()
-        device_item = [-getattr(dd, feature), dd.to_dict()]
+        device_item = [-getattr(dd, feature), dd.deviceId, dd.to_dict()]
         for itv in intervals:
             key = "_".join([feature, itv])
             cache = json.loads(memcached.get(key))
 
             # if device already in cache, replace val if larger (pop & insort)
             try:
-                idx = [v[1]["deviceId"]
-                    for v in cache["minmaxes"]].index(dd.deviceId)
+                idx = [dd_dict["deviceId"]
+                    for _, _, dd_dict in cache["minmaxes"]].index(dd.deviceId)
                 if device_item > cache["minmaxes"][idx]:
                     cache["minmaxes"].pop(idx)
                     bisect.insort(cache["minmaxes"], device_item)
@@ -85,7 +85,7 @@ def dashboard():
         # cache hit based on timestamp of oldest record
         cache_timestamp = dt.fromisoformat(cache["timestamp"])
         if cutoff_time and cache_timestamp >= cutoff_time:
-            top_readings = [dd_dict for _, dd_dict in cache["minmaxes"]]
+            top_readings = [dd_dict for _, _, dd_dict in cache["minmaxes"]]
 
         # cache miss, query and update memcached
         else:
@@ -119,7 +119,9 @@ def dashboard():
             timestamp, array = dt.now().isoformat(), []
             if len(top_readings) > 0:
                 timestamp = min(x["timestamp"] for x in top_readings)
-                array = [[-dd_dict[feature], dd_dict] for dd_dict in top_readings]
+                array = [
+                    [-dd_dict[feature], dd_dict["deviceId"], dd_dict]
+                    for dd_dict in top_readings]
             memcached.set(
                 key,
                 json.dumps({"timestamp": timestamp, "minmaxes": array})

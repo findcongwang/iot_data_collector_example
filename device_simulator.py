@@ -24,8 +24,8 @@ def device_worker(id):
         if resp:
             print(resp.json())
 
-        # randomize interval between 1-5 seconds
-        time.sleep(random.randint(1,5))
+        # randomize interval between 1-10 seconds
+        time.sleep(random.randint(1,10))
 
 def simulate_devices(argv):
     """
