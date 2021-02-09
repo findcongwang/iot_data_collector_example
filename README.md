@@ -2,6 +2,22 @@
 
 Small Python IoT sample app that collects simulated IoT device readings and stores into a Postgres database. A cache is available to optimize queries on the top 10 devices with highest feature values (i.e. Temperature, Pressure) over some time (i.e. All-Time, Past-Minute, Past-Hour).
 
+#### Project Structure
+```
+│─── .gitignore
+│─── device_simulator.py      # IoT device simulator
+│─── Pipfile
+│─── Pipfile.lock
+│─── README.md
+└─── backend
+    │─── .env                 # Environment variables for configs
+    │─── config.py            
+    └─── app
+        |─── models.py        # Data models for device data
+        |─── routes.py        # API endpoints
+        └─── __init__.py      # FLASK_APP entry point
+```
+
 #### Configuration
 
 ```bash
