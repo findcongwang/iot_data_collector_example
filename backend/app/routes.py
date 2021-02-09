@@ -64,7 +64,7 @@ def dashboard():
 
     Returns from cache on-hit, based on:
         - interval is all_time or cache[timestamp] < cutoff_time
-    On miss, queries from databse, update cache
+    On miss, queries from database, update cache
     """
     features = request.args.get('features', None)
     interval = request.args.get('interval', "all_time")

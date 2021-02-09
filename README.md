@@ -4,16 +4,33 @@ Small Python IoT sample app that collects simulated IoT device readings and stor
 
 #### Configuration
 
-1. Create database `iot_data_collector` in local Postgres instance.
+```bash
+# Config ENV variables in backend/.env
+# Create database `iot_data_collector` in local Postgres instance
+export SQLALCHEMY_DATABASE_URI="postgresql://<user>:<pw>@localhost:5432/<database>"
+
+# Config the number of top devices returned by dashboard route
+export NUM_TOP_DEVICES=10
+```
 
 #### How To Run
 
+```bash
+# Setup virtual env and install packages
+$ pipenv shell
+$ pipenv install
+
+# Start backend server
+$ cd backend && flask run
+
+# On separate terminal, start device simulator (remember to pipenv shell)
+$ python device_simulator.py --num_devices=20
+
+# Open browser or postman and test dashboard API endpoint, e.g.
+# http://localhost:5000/dashboard
+# http://localhost:5000/dashboard?features=pressure
+# http://localhost:5000/dashboard?features=pressure&interval=past_minute
 ```
-python simulator/device_simulator.py --num_devices=20
-```
-1. Run the simulator `test`
-2. Run the backend service `test`
-3. Run dashboard application `test`
 
 #### Extensions and Tech Considerations
 * ReactJS frontend web dashboard
@@ -31,7 +48,6 @@ python simulator/device_simulator.py --num_devices=20
 - [x] Make simulator to produce to data endpoint w/ device per thread
 - [x] Make devicedata endpoint to receive data and update memcached/database
 - [x] Make dashboard route to fetch from memcached or fallback to database
-- [ ] Setup server Procfile to bring up backend API and Kafka listener
 
 #### Developer's Note =D
 
